@@ -9,6 +9,11 @@ namespace Membership.Infrastructure.Repositories
 {
     public class MembershipService : IMembershipService
     {
+        private readonly AppDbContext _context;
+        public MembershipService(AppDbContext context)
+        {
+            _context = context;
+        }
         public Task<Core.Entities.Membership> AddMembershipAsync()
         {
             throw new NotImplementedException();
