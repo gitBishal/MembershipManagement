@@ -1,4 +1,7 @@
-﻿using Membership.Core.Entities;
+﻿using AutoMapper;
+using Membership.Core.Entities;
+using Membership.Core.Interfaces;
+using Membership.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,14 +11,19 @@ namespace Membership.Controllers
     [ApiController]
     public class MembershipManagementController : ControllerBase
     {
-        public MembershipManagementController()
-        {
+        private readonly IMapper _mapper;
+        private readonly IMembershipService _membershipService;
 
-        }
-        public async Task<IActionResult> Membership()
+        public MembershipManagementController(IMapper mapper,IMembershipService membershipService)
         {
-            var response = new ApiResponse();
-            return Ok(response);
+            _mapper = mapper;
+            _membershipService = membershipService;
+        }
+        [HttpPost,Route("addMembership")]
+        public async Task<IActionResult> AddMembership([FromBody] AddOrUpdateMembershipViewModel addMembershipModel)
+        {
+            await _membershipService.AddMembershipAsync(_mapper.Map<Core.Entities.Membership>(addMembershipModel));
+            return Ok(addMembershipModel);
         }
     }
 }

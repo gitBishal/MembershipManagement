@@ -1,4 +1,5 @@
 ﻿using Membership.Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,17 +15,18 @@ namespace Membership.Infrastructure.Repositories
         {
             _context = context;
         }
-        public Task<Core.Entities.Membership> AddMembershipAsync()
+        public async Task<Core.Entities.Membership> AddMembershipAsync(Core.Entities.Membership membership)
         {
-            throw new NotImplementedException();
+            await _context.Memberships.AddAsync(membership);
+            await _context.SaveChangesAsync();
+            return membership;
         }
 
-        public Task<Core.Entities.Membership> GetAllMembershipsAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<Core.Entities.Membership>> GetAllMembershipsAsync() =>
+            await _context.Memberships.AsNoTracking().Include(x => x.DiscountType).ToListAsync();
+       
 
-        public Task<Core.Entities.Membership> UpdateMembershipAsync()
+        public Task<Core.Entities.Membership> UpdateMembershipAsync(Core.Entities.Membership membership )
         {
             throw new NotImplementedException();
         }
