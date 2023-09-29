@@ -31,5 +31,11 @@ namespace Membership.Controllers
             await _membershipService.UpdateMembershipAsync(_mapper.Map<Core.Entities.Membership>(updateMembershipModel));
             return Ok(updateMembershipModel);
         }
+        [HttpDelete,Route("deleteMembership")]
+        public async Task<IActionResult> DeleteMembership(Guid id)
+        {
+            var result = await _membershipService.DeleteMembershipAsync(id);
+            return Ok("Deleted successfully");
+        }
     }
 }

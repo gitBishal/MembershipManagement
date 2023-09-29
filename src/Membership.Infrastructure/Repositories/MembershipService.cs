@@ -1,4 +1,5 @@
-﻿using Membership.Core.Interfaces;
+﻿using Membership.Core.Entities;
+using Membership.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,14 @@ namespace Membership.Infrastructure.Repositories
             await _context.Memberships.AddAsync(membership);
             await _context.SaveChangesAsync();
             return membership;
+        }
+
+        public async Task<int> DeleteMembershipAsync(Guid id)
+        {
+            var memberShipToDelete = await _context.Memberships.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Failed to delete");
+             _context.Memberships.Remove(memberShipToDelete);
+            return await _context.SaveChangesAsync();
+
         }
 
         public async Task<IEnumerable<Core.Entities.Membership>> GetAllMembershipsAsync() =>
