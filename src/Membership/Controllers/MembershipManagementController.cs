@@ -25,5 +25,11 @@ namespace Membership.Controllers
             await _membershipService.AddMembershipAsync(_mapper.Map<Core.Entities.Membership>(addMembershipModel));
             return Ok(addMembershipModel);
         }
+        [HttpPut, Route("updateMembership")]
+        public async Task<IActionResult> UpdateMembership([FromBody] AddOrUpdateMembershipViewModel updateMembershipModel)
+        {
+            await _membershipService.UpdateMembershipAsync(_mapper.Map<Core.Entities.Membership>(updateMembershipModel));
+            return Ok(updateMembershipModel);
+        }
     }
 }

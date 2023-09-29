@@ -26,9 +26,16 @@ namespace Membership.Infrastructure.Repositories
             await _context.Memberships.AsNoTracking().Include(x => x.DiscountType).ToListAsync();
        
 
-        public Task<Core.Entities.Membership> UpdateMembershipAsync(Core.Entities.Membership membership )
+        public async Task<Core.Entities.Membership> UpdateMembershipAsync(Core.Entities.Membership memberShip )
         {
-            throw new NotImplementedException();
+            var memberShipFromDb = await _context.Memberships.FirstOrDefaultAsync(x => x.Id == memberShip.Id) ?? throw new Exception("Failed to update");
+            memberShipFromDb.Name = memberShip.Name;
+            memberShipFromDb.Description = memberShip.Description;
+            memberShip.DiscountValue = memberShipFromDb.DiscountValue;
+            memberShip.DiscountTypeId = memberShipFromDb.DiscountTypeId;
+            _context.Memberships.Update(memberShipFromDb);
+            await _context.SaveChangesAsync();
+            return memberShip;
         }
     }
 }
