@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
+using Membership.Application.Interfaces;
+using Membership.Application.ViewModels;
 using Membership.Core.Entities;
-using Membership.Core.Interfaces;
-using Membership.ViewModels;
-using Microsoft.AspNetCore.Http;
+using Membership.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Membership.Controllers
@@ -11,25 +11,21 @@ namespace Membership.Controllers
     [ApiController]
     public class MembershipManagementController : ControllerBase
     {
-        private readonly IMapper _mapper;
         private readonly IMembershipService _membershipService;
 
-        public MembershipManagementController(IMapper mapper,IMembershipService membershipService)
+        public MembershipManagementController(IMembershipService membershipService)
         {
-            _mapper = mapper;
             _membershipService = membershipService;
         }
         [HttpPost,Route("addMembership")]
         public async Task<IActionResult> AddMembership([FromBody] AddOrUpdateMembershipViewModel addMembershipModel)
         {
-            await _membershipService.AddMembershipAsync(_mapper.Map<Core.Entities.Membership>(addMembershipModel));
-            return Ok(addMembershipModel);
+            return Ok(await _membershipService.AddMembershipAsync(addMembershipModel));
         }
         [HttpPut, Route("updateMembership")]
         public async Task<IActionResult> UpdateMembership([FromBody] AddOrUpdateMembershipViewModel updateMembershipModel)
         {
-            await _membershipService.UpdateMembershipAsync(_mapper.Map<Core.Entities.Membership>(updateMembershipModel));
-            return Ok(updateMembershipModel);
+            return Ok(await _membershipService.UpdateMembershipAsync(updateMembershipModel));
         }
         [HttpDelete,Route("deleteMembership")]
         public async Task<IActionResult> DeleteMembership(Guid id)

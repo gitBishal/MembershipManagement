@@ -10,7 +10,7 @@ namespace Membership.Infrastructure
     {
         public static IServiceCollection AddServicesWithInfrastructure(this IServiceCollection services)
         {
-            services.AddScoped<IMembershipService, MembershipService>();
+            services.AddScoped<IMembershipRepository, MembershipRepository>();
             return services;
         }
         public static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration config)

@@ -1,18 +1,13 @@
-﻿using Membership.Core.Entities;
-using Membership.Core.Interfaces;
+﻿using Membership.Core.Interfaces;
+using Membership.Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Membership.Infrastructure.Repositories
 {
-    public class MembershipService : IMembershipService
+    public class MembershipRepository : IMembershipRepository
     {
         private readonly AppDbContext _context;
-        public MembershipService(AppDbContext context)
+        public MembershipRepository(AppDbContext context)
         {
             _context = context;
         }
@@ -25,19 +20,19 @@ namespace Membership.Infrastructure.Repositories
 
         public async Task<int> DeleteMembershipAsync(Guid id)
         {
-            var memberShipToDelete = await _context.Memberships.FirstOrDefaultAsync(x => x.Id == id) ?? throw new Exception("Failed to delete");
+            var memberShipToDelete = await _context.Memberships.FirstOrDefaultAsync(x => x.Id == id) ?? throw new RecordNotFoundException("Failed to delete");
              _context.Memberships.Remove(memberShipToDelete);
             return await _context.SaveChangesAsync();
 
         }
 
-        public async Task<IEnumerable<Core.Entities.Membership>> GetAllMembershipsAsync() =>
+        public async Task<List<Core.Entities.Membership>> GetAllMembershipsAsync() =>
             await _context.Memberships.AsNoTracking().Include(x => x.DiscountType).ToListAsync();
        
 
         public async Task<Core.Entities.Membership> UpdateMembershipAsync(Core.Entities.Membership memberShip )
         {
-            var memberShipFromDb = await _context.Memberships.FirstOrDefaultAsync(x => x.Id == memberShip.Id) ?? throw new Exception("Failed to update");
+            var memberShipFromDb = await _context.Memberships.FirstOrDefaultAsync(x => x.Id == memberShip.Id) ?? throw new RecordNotFoundException("Failed to update");
             memberShipFromDb.Name = memberShip.Name;
             memberShipFromDb.Description = memberShip.Description;
             memberShip.DiscountValue = memberShipFromDb.DiscountValue;
