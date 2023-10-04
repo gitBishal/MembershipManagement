@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Membership.Application.Interfaces;
+﻿using Membership.Application.Interfaces;
 using Membership.Application.ViewModels;
 using Membership.Core.Entities;
 using Membership.Infrastructure.Exceptions;
