@@ -14,6 +14,7 @@ namespace Membership.Application.Mappers
         {
             CreateMap<Core.Entities.Membership,AddOrUpdateMembershipViewModel>().ReverseMap();    
             CreateMap<Core.Entities.Membership,MembershipViewModel>().ReverseMap();    
+            CreateMap<MembershipViewModel, Core.Entities.Membership>().ReverseMap();    
         }
     }
 }

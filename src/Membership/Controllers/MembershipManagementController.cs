@@ -16,21 +16,21 @@ namespace Membership.Controllers
         {
             _membershipService = membershipService;
         }
-        [HttpPost,Route("addMembership")]
-        public async Task<IActionResult> AddMembership([FromBody] AddOrUpdateMembershipViewModel addMembershipModel)
-        {
-            return Ok(await _membershipService.AddMembershipAsync(addMembershipModel));
-        }
-        [HttpPut, Route("updateMembership")]
-        public async Task<IActionResult> UpdateMembership([FromBody] AddOrUpdateMembershipViewModel updateMembershipModel)
-        {
-            return Ok(await _membershipService.UpdateMembershipAsync(updateMembershipModel));
-        }
-        [HttpDelete,Route("deleteMembership")]
-        public async Task<IActionResult> DeleteMembership(Guid id)
-        {
-            var result = await _membershipService.DeleteMembershipAsync(id);
-            return Ok("Deleted successfully");
-        }
+        //[HttpPost,Route("addMembership")]
+        //public async Task<IActionResult> AddMembership([FromBody] AddOrUpdateMembershipViewModel addMembershipModel)
+        //{
+        //    return Ok(await _membershipService.AddMembershipAsync(addMembershipModel));
+        //}
+        //[HttpPut, Route("updateMembership")]
+        //public async Task<IActionResult> UpdateMembership([FromBody] AddOrUpdateMembershipViewModel updateMembershipModel)
+        //{
+        //    return Ok(await _membershipService.UpdateMembershipAsync(updateMembershipModel));
+        //}
+        //[HttpDelete,Route("deleteMembership")]
+        //public async Task<IActionResult> DeleteMembership(Guid id)
+        //{
+        //    var result = await _membershipService.DeleteMembershipAsync(id);
+        //    return Ok("Deleted successfully");
+        //}
     }
 }

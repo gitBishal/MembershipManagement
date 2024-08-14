@@ -9,9 +9,9 @@ namespace Membership.Application.Interfaces
 {
     public interface IMembershipService
     {
-        Task<List<MembershipViewModel>> GetAllMembershipsAsync();
-        Task<AddOrUpdateMembershipViewModel> AddMembershipAsync(AddOrUpdateMembershipViewModel membership);
-        Task<AddOrUpdateMembershipViewModel> UpdateMembershipAsync(AddOrUpdateMembershipViewModel membership);
-        Task<int> DeleteMembershipAsync(Guid id);
+        Task<MembershipViewModel> GetAllMembershipsByIDAsync(Guid id);
+      //  Task<AddOrUpdateMembershipViewModel> AddMembershipAsync(AddOrUpdateMembershipViewModel membership);
+      //  Task<AddOrUpdateMembershipViewModel> UpdateMembershipAsync(AddOrUpdateMembershipViewModel membership);
+      //  Task<int> DeleteMembershipAsync(Guid id);
     }
 }

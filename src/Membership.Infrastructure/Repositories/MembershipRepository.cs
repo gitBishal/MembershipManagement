@@ -28,7 +28,12 @@ namespace Membership.Infrastructure.Repositories
 
         public async Task<List<Core.Entities.Membership>> GetAllMembershipsAsync() =>
             await _context.Memberships.AsNoTracking().Include(x => x.DiscountType).ToListAsync();
-       
+
+        public async Task<Core.Entities.Membership> GetAllMembershipsbyIDAsync(Guid id)
+        {
+            var memberShipToDelete = await _context.Memberships.FirstOrDefaultAsync(x => x.Id == id) ?? throw new RecordNotFoundException("Failed to delete");
+            return memberShipToDelete;
+        }
 
         public async Task<Core.Entities.Membership> UpdateMembershipAsync(Core.Entities.Membership memberShip )
         {
